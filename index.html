@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./base.css">
+    <link rel="stylesheet" href="./modal.css">
+</head>
+
+<body>
+    <header class="bg-dark border-bottom py-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <a href="https://semacret.eu/" class="me-3">
+                <img src="https://semacret.eu/wp-content/uploads/2022/08/cropped-cropped-logo-h-wht.png" alt="SEMACRET"
+                    style="height:60px;">
+            </a>
+
+            <!-- Title + Description + Clickable Text -->
+            <div class="text-end">
+
+                <p class="mb-1 text-secondary small">
+                    Mineral Resources Mapping of Orthomagmatic Deposits in Europe
+                </p>
+
+                <!-- Clickable spans -->
+                <div class="small header-disclaimer">
+                    <span class="text-primary me-3 infoButton">
+                        Disclaimer</span>
+                    <span style="color:white" class="me-3">|</span>
+                    <span class="text-primary terminologyButton">
+                        Terminology
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- <div class="header">
+        <div class="header-title">Mineral Resources Mapping of Orthomagmatic Deposits in Europe</div>
+        <div class="header-disclaimer">
+            <span class="infoButton">Disclaimer</span>
+            |
+            <span class="terminologyButton">Terminology</span>
+        </div>
+    </div> -->
+    <div class="row gx-0 main-area">
+        <div class="col-12 col-md-3">
+            <div id="filter-selections">
+                <div class="filter-header" for="occurence">Occurrence type</div>
+                <div id="occurence"></div>
+                <!-- <div class="filter-header">Countries</div>
+                <div id="countries"></div> -->
+                <div class="filter-header" for="mineralization">Mineralization</div>
+                <div id="mineralization"></div>
+                <div class="filter-header" for="classification">Classification</div>
+                <div id="classification"></div>
+                <div class="filter-header" for="importance">Importance</div>
+                <div id="importance"></div>
+                <div class="filter-header" for="INSPIREMine">INSPIRE Mine Status</div>
+                <div id="INSPIREMine"></div>
+            </div>
+        </div>
+        <!-- 
+        <div class="col-12 col-md-9" id="fullscreenTarget">
+            <button id="fullscreen-btn" class="btn btn-light">Fullscreen</button>
+            <div id="map"></div>
+        </div> -->
+        <div class="col-12 col-md-9 position-relative" id="fullscreenTarget">
+            <button id="fullscreen-btn" class="btn btn-light position-absolute top-0 end-0 m-2">
+                Fullscreen
+            </button>
+            <div id="map"></div>
+        </div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Modal Title</h2>
+                <span class="modal-close" id="modalClose">&times;</span>
+            </div>
+            <div class="modal-body" id="modalText">
+                <!-- Your dynamic text content goes here -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <div style="display: none">
+        <div id="mapDescription">
+            <div style="text-align: justify;">
+                <p>
+                    This map viewer presents the results of the resource mapping of orthomagmatic mineral deposits in
+                    Europe.
+                    This task was part of the Work Package 5 of the SEMACRET project. Data were systematically
+                    collected,
+                    reviewed, complemented and evaluated between November 2023 and February 2025. As the source of
+                    information
+                    were used existing national and EU databases as were as other additional literature (articles, press
+                    releases, reports, etc.). It covers EU and associated European countries (Norway, South Balkan
+                    countries) as
+                    well Greenland, associated with the EU thorough Denmark as overseas territory which recently signed
+                    strategic partnership on sustainable raw materials value chains with the EU.
+                </p>
+                <p>The map shows different types of mineralizations associated with orthomagmatic mafic-ultramafic
+                    mineral systems:</p>
+                <ul>
+                    <li>Sulphide Ni-Cu dominated mineralization with possible Co, Cr and/or PGE by-products</li>
+                    <li>Oxide (Fe)-Ti-V mineralizations (with Ti/V rich magnetite, rutile or ilmenites)</li>
+                    <li>Chrome ores</li>
+                    <li>PGE dominated (reef type) mineralizations that might be associated with other precious and base
+                        metals (Au, Ag, Cu, Ni)</li>
+                </ul>
+                <p> The database that has been created to this purpose contains basic information, localization with
+                    coordinates, characterization of occurrence type, resource quantities (if available), including
+                    UNFC<sup>1</sup>. In addition to the basic information, for majority of points is available a link
+                    to
+                    passport
+                    with more detailed information.</p>
+
+                <p>The map viewer allows to filter data by different attributes, such as occurrence type (deposit,
+                    prospect, occurrence), mine status (operating, under development, not operating) or importance (very
+                    large, large, medium, small) which are based on INSPIRE Mineral Resources Theme
+                    definitions<sup>2</sup> .
+                    Other
+                    filter options are by mineralization type or by classification method applied for the resource
+                    estimate.</p>
+
+                <p>To learn more about the specific definitions applied in the map viewer and the passports see the
+                    <u>Terminology</u>.
+                </p>
+                <p>If you have further questions or comments, please use the SEMACRET <u>Contact form</u>, or contact
+                    directly to: <u><a href="mailto:blazena.wertichova@geology.cz">blazena.wertichova@geology.cz</a></u>
+                </p>
+                <p><b><i>Disclaimer:</i></b></p>
+                <p><i>Information provided in the Map viewer and respective Mineral deposit passports are based on the
+                        literature review at the time of data collection. The purpose of the Map viewer is to illustrate
+                        general mineral potential of selected deposit type in the EU and associated countries. It is not
+                        aimed to be neither an inventory nor any kind of qualified assessment, advice or official
+                        statement. Authors are not responsible for the use which might be made of this application. It
+                        is recommended to verify an up to date information of respective objects from reliable
+                        sources.</i></p>
+
+
+                <div style="border-top: 3px solid #bbb;">
+
+                    <p>1 - For the UNFC, the United Nations Framework Classification Update 2019 and related guidances and documents has been applied. For further information see: <a target="_blank" href="https://unece.org/sustainable-energy/publications/united-nations-framework-classification-resources-update-2019-ece">https://unece.org/sustainable-energy/publications/united-nations-framework-classification-resources-update-2019-ece</a>.<br>For CRIRSCO-compliant resource estimates, respective UNFC class is not displayed
+                    </p>
+                    <p>2 - <a
+                            href="https://knowledge-base.inspire.ec.europa.eu/publications/inspire-data-specification-mineral-resources-technical-guidelines_en"
+                            target="_blank">https://knowledge-base.inspire.ec.europa.eu/publications/inspire-data-specification-mineral-resources-technical-guidelines_en</a>
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="./files/SEMACRET_Mapviewer_description.pdf" download class="download-btn">
+                        <!-- SVG Download Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-8 2v2h16v-2H4z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="mapTerminology">
+            <p><b>Occurrence ID</b> – unique identifier of each mineral occurrence in the database</p>
+            <p><b>Occurrence name</b> – name or names under which the occurrence or deposit is
+                known/registered in other databases or literature</p>
+            <p><b>Country</b> – name of the country, where the occurrence is placed</p>
+            <p><b>Occurrence type</b> – based on INSPIRE Mineral Occurrence Type 2 with corresponding
+                definitions of occurrence, prospect and mineral deposit in relation to the level of knowledge
+                and economic potential</p>
+            <p><b>Mineralization type</b> – usual association of valuable elements (metals) in this type of
+                mineralization (mentioned elements are not necessarilly present in this occurrence)</p>
+            <p><b>Importance</b> – Importance of the deposit based on INSPIRE Importance Value (European
+                Commission, 2024). Express the classification of deposit size of the deposit according to the
+                commodity quantity. Class boundaries are based on a statistical study of a large set of
+                deposits throughout the world and defines what is a very large, a large, a medium-sized etc.
+                deposit for this commodity.</p>
+            <p><b>Classification method</b> – classification method applied in the most recent resource estimate
+                 CRIRSCO-compliant – resource estimate applies classification in line with CRIRSCO - family
+                reporting standard. The current holder is the one who has issued or confirmed the estimate,
+                thus it is considered CRIRSCO-compliant.
+                 Historic CRIRSCO – resources have been classified according to the CRIRSCO-family standard,
+                however, the company has left the tenement or there has been an ownership change
+                without amending the resource estimate. Such estimates are usually referred as historic or
+                foreign and are not considered CRIRSCO-compliant sensu stricto.
+                 Non-compliant/historic – the resource estimate is not in line with any CRIRSCO-family
+                reporting standard and related classification. The classification might be in line with some
+                national standard, or it is a historic/not standardized classification
+                 No resource estimate – the resource estimate does not exist (is not known).
+            </p>
+            <p><b>Estimation date</b> – date of the issue of the estimate. In the case of CRIRSCO-compliant
+                estimates, the Effective date is provided. In the case that only year is known, the date 31.12.
+                + year is used.</p>
+            <p><b>Total ore (t)</b> – total tonnage of all resource and reserves categories, based on the most
+                recent available estimate (the last estimate for which the tonnages and grades has been
+                available, based on the literature).</p>
+            <p><b>Best UNFC class</b> - the UNFC class that best represents the Project development status and
+                overall confidence in the resource estimate. For CRIRSCO-compliant resource estimates, the
+                UNFC class is not displayed.</p>
+            <p><b>Best UNFC amount</b> – Proportion of commodity quantities, that corresponds to the Best
+                UNFC class.</p>
+            <p><b>Additional UNFC class + Additional quantities</b> - The project itself may contain additional
+                commodity quantities with different UNFC classes.</p>
+            <p><b>INSPIRE Mine Status</b> – status of the mine development based on INSPIRE Mine Status 3 with
+                corresponding definitions of operating, under development, not operating</p>
+            <p>If you have further questions or comments, please use the SEMACRET Contact form, or
+                contact directly to: <u><a
+                        href="mailto:blazena.wertichova@geology.cz">blazena.wertichova@geology.cz</a></u></p>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="./files/SEMACRET_Mapviewer_Terminology_passport.pdf" download class="download-btn">
+                    <!-- SVG Download Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
+                        <path d="M12 16l4-5h-3V4h-2v7H8l4 5zm-8 2v2h16v-2H4z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark border-top">
+        <div class="py-4 text-center">
+            <img src="https://semacret.files.wordpress.com/2023/05/logos_footer_site_v3.png?w=1024" alt="Project logos"
+                class="img-fluid">
+        </div>
+    </footer>
+    <script src="./base.js"></script>
+    <script src="./modal.js"></script>
+</body>
+
+</html>

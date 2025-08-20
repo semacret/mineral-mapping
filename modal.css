@@ -1,0 +1,72 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 6px;
+    width: 80%;
+    max-height: 70%;
+    overflow: auto;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.modal-header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    z-index: 10;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.modal-close {
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #888;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #007BFF;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.download-btn:hover {
+    background: #0056b3;
+}
